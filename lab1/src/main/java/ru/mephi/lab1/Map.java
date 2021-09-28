@@ -2,9 +2,14 @@ package ru.mephi.lab1;
 
 public class Map {
     private List list_items;
+    private int size = 0;
+
+    private static final int container_size = 16;
+
 
     public Map(){
-        this.list_items = null;
+        this.size = container_size;
+        this.list_items = new List(container_size);
     }
 
     public Map(Map_node... items){

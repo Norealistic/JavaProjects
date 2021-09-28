@@ -4,6 +4,7 @@ public class Map_node {
     private Object key;
     private Object value;
 
+
     public Map_node(){
         this.key = null;
         this.value = null;

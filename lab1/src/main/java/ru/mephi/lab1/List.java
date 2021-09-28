@@ -4,18 +4,27 @@ public class List {
     private Object[] values;
     private int size;
 
+    private static final int container_size = 8;
+
+
     List(){
-        this.values = null;
-        this.size = 0;
+        this.values = new Object[container_size];
+        this.size = container_size;
+    }
+
+    List(int size){
+        this.size = size;
+        this.values = new Object[size];
     }
 
     List(Object... values){
         this.values = new Object[values.length];
         System.arraycopy(values, 0, this.values, 0, values.length);
+        this.size = values.length;
     }
 
     public Object get (int index){
-        if (index<this.values.length) return this.values[index];
+        if (index<this.size && index>-1) return this.values[index];
         else {
             System.out.println("Index is out of range");
             return null;
@@ -23,19 +32,21 @@ public class List {
     }
 
     public void add(Object value){
-        Object[] result = new Object[this.values.length+1];
-        System.arraycopy(this.values, 0, result, 0, this.values.length);
+        Object[] result = new Object[this.size+1];
+        System.arraycopy(this.values, 0, result, 0, this.size);
         result[result.length-1] = value;
         this.values = result;
+        this.size = result.length;
     }
 
     public Object remove(int index){
-        if (index<this.values.length) {
+        if (index<this.size && index>-1) {
             Object removed = this.values[index];
-            Object[] result = new Object[this.values.length - 1];
+            Object[] result = new Object[this.size - 1];
             System.arraycopy(this.values, 0, result, 0, index);
-            System.arraycopy(this.values, index + 1, result, index, this.values.length - index - 1);
+            System.arraycopy(this.values, index + 1, result, index, this.size - index - 1);
             this.values = result;
+            this.size = result.length;
             return removed;
         }
         else{
@@ -45,11 +56,11 @@ public class List {
     }
 
     public void add(Object value, int index){
-        if (index<this.values.length) {
-            Object[] result = new Object[this.values.length + 1];
+        if (index<this.size && index>-1) {
+            Object[] result = new Object[this.size + 1];
             System.arraycopy(this.values, 0, result, 0, index);
             result[index] = value;
-            System.arraycopy(this.values, index, result, index + 1, this.values.length - index);
+            System.arraycopy(this.values, index, result, index + 1, this.size - index);
             this.values = result;
         }
         else System.out.println("Index is out of range");
@@ -73,12 +84,12 @@ public class List {
     }
 
     public Object set(Object value, int index){
-        if (index<this.values.length) {
-            Object[] result = new Object[this.values.length];
+        if (index<this.size  && index>-1) {
+            Object[] result = new Object[this.size];
             Object rewrited = this.values[index];
             System.arraycopy(this.values, 0, result, 0, index);
             result[index] = value;
-            System.arraycopy(this.values, index + 1, result, index + 1, this.values.length - index - 1);
+            System.arraycopy(this.values, index + 1, result, index + 1, this.size - index - 1);
             this.values = result;
             return rewrited;
         }
@@ -88,24 +99,21 @@ public class List {
         }
     }
 
-    public int size(){
-        return (this.values.length);
-    }
+    public int size(){return (this.size);}
 
     public boolean isEmpty(){
-        if (this.size == 0) return true;
-        else return false;
+        return this.size == 0;
     }
 
     public void print(){
-        for (int i = 0; i <  this.values.length; i++) {
-            if (i!=this.values.length-1) System.out.print(this.values[i] + ", ");
+        for (int i = 0; i <  this.size; i++) {
+            if (i!=this.size-1) System.out.print(this.values[i] + ", ");
             else System.out.println(this.values[i]);
         }
     }
 
     public static void main(String[] args){
-        Object[] num = new Object[]{2, 4, 5, 7, "a"};
+        Object[] num = new Object[]{2, 4, 5, 7};
         List list = new List(num);
         System.out.println(list.isEmpty());
         list.print();
